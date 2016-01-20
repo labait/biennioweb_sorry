@@ -1,4 +1,58 @@
 <!doctype html>
+<?php
+
+  $sorry = new Sorry();
+  $action = FALSE;
+  $excuse = array('index' => 0);
+  if (isset($_GET['index'])){
+    $excuse = $sorry->set($_GET['index']);
+    header('Location: '.'?code='.$excuse['code']);
+  } else if(isset($_GET['code'])){
+    $excuse = $sorry->get(NULL, $_GET['code']);
+  }
+
+
+  class Sorry {
+      //public $aMemberVar = 'aMemberVar Member Variable';
+      //public $aFuncName = 'aMemberFunc';
+
+      private $db;
+
+
+      function openDb(){
+        $this->db = new SQLite3('../database/database.sqlite') or die('Unable to open database');
+      }
+
+      function get($id=NULL, $code=NULL){
+        $sql = "select * from excuses where ".($id ? " id = $id" : "code='$code'");
+        $this->openDb();
+        $excuse = $this->db->querySingle($sql, TRUE);
+        return $excuse;
+      }
+
+      function set($index, $message=NULL){
+        $this->openDb();
+        $code = uniqid();
+        date_default_timezone_set('Europe/Rome');
+        $date = new DateTime();
+
+        $timestamp = $date->getTimestamp();
+        $query = "
+          insert into excuses (code, 'index', message, timestamp) values ('$code', $index, '$message', $timestamp);
+        ";
+
+        $this->openDb();
+        $this->db->query($query);
+        $excuse = $this->get($this->db->lastInsertRowID());
+        return $excuse;
+      }
+
+  }
+
+?>
+
+
+
 <html class="no-js" lang="">
     <head>
         <meta charset="utf-8">
@@ -107,6 +161,7 @@
 
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+        <script src="js/purl.js"></script>
         <script src="js/plugins.js"></script>
 
         <!-- Latest compiled and minified JavaScript -->
@@ -123,5 +178,22 @@
             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
             ga('create','UA-XXXXX-X','auto');ga('send','pageview');
         </script>
+
+
+        <!-- SCRIPT INIT -->
+        <script>
+          $(document).ready(function(){
+            init()
+            var url = $.url();
+            if(url.param('code')){
+              renderExcuse(<?php print $excuse['index']; ?>)
+            } else {
+              showSection("home")
+            }
+
+          })
+
+        </script>
+
     </body>
 </html>

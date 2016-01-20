@@ -1,7 +1,4 @@
 $(document).ready(function(event){
-  init()
-
-  showSection("home")
   $("#link-generate").on("click", function(e){
     generate()
   })
@@ -24,12 +21,18 @@ function showSection(section_id) {
 function generate(){
   // count how many excuses i have
   var howManyExcuses = $("#app #excuses li").length
-  var choose = Math.floor(Math.random()*howManyExcuses)+1
-  alert("tra le "+howManyExcuses+" che ho, scelgo la"+choose)
+  var index = Math.floor(Math.random()*howManyExcuses)+1
+  alert("tra le "+howManyExcuses+" che ho, scelgo la "+index)
+  window.location.href = "?index="+index
+}
+
+
+function renderExcuse(index) {
+  alert("excuse "+index)
   // show excuse
   showSection("result")
   $("#app #excuses li.excuse").hide()
-  $("#app #excuse"+choose).show()
+  $("#app #excuse"+index).show()
 }
 
 
