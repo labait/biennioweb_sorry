@@ -1,4 +1,3 @@
-<!doctype html>
 <?php
 
   $sorry = new Sorry();
@@ -52,7 +51,7 @@
 ?>
 
 
-
+<!doctype html>
 <html class="no-js" lang="">
     <head>
         <meta charset="utf-8">
@@ -95,6 +94,7 @@
             </div>
           </section>
 
+
           <!-- home -->
           <section id="home">
             <div class="row">
@@ -103,10 +103,11 @@
                   <div class="description">
                     Welcome to sorry
                   </div>
-                  <a href="#" id="link-generate" class="link">Generate!</a>
+                  <a href="#" class="link-generate">Generate!</a>
               </div>
             </div>
           </section>
+
 
           <!-- result -->
           <section id="result">
@@ -126,33 +127,39 @@
                 </ul>
               </div>
 
-              <div class="row">
-                <a href="#" id="link-share" class="link">Share!</a>
+              <div id="buttons-share" class="row">
+                <!-- AddToAny BEGIN -->
+                <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                <a class="a2a_button_facebook"></a>
+                <a class="a2a_button_twitter"></a>
+                <a class="a2a_button_whatsapp"></a>
+                <a class="a2a_button_email"></a>
+                </div>
+                <script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+                <!-- AddToAny END -->
               </div>
+
             </div>
           </section>
 
 
-          <!-- share -->
-          <section id="share">
+          <!-- info -->
+          <section id="info">
             <div class="row">
               <div class="col-sm-12">
-                  <div class="description">
-                   How to share instructions
-                  </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- instrunctions -->
-          <section id="instructions">
-            <div class="row">
-              <div class="col-sm-12">
-                instructions...
+                  This is the info section
 
               </div>
             </div>
           </section>
+
+          <footer>
+            <a href="./" class="link-home">Home</a>
+            <a href="#" class="link-info">Info</a>
+            <a href="#" class="link-generate">Generate!</a>
+
+          </footer>
 
 
         </div>
@@ -167,6 +174,7 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
+        <script src="js/shake.js"></script>
         <script src="js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -186,6 +194,7 @@
             init()
             var url = $.url();
             if(url.param('code')){
+              //alert(url.param('code'))
               renderExcuse(<?php print $excuse['index']; ?>)
             } else {
               showSection("home")

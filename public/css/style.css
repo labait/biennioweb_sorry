@@ -6,3 +6,12 @@ body {
  #app section {
    display: none;
  }
+
+
+body.section-home .link-home{
+  display: none;
+}
+
+body.section-info .link-info{
+  display: none;
+}
